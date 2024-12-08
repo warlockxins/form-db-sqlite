@@ -19,14 +19,14 @@ const createTables = (db: Database) => {
   `);
 };
 
-const insertLayout = (db: Database, type: string, parentId: number | null = null): number | bigint => {
+const insertLayout = (db: Database, type: string, parentId: number | bigint | null = null): number | bigint => {
 	// Insert and return the id of the newly inserted row
 	const result = db.prepare('INSERT INTO layouts (type, parent_id) VALUES (?, ?) RETURNING id').run(type, parentId);
 	console.log("check here ->", result)
 	return result.lastInsertRowid;
 };
 
-const insertControl = (db: Database, label: string, scope: string, layoutId: number): number | bigint => {
+const insertControl = (db: Database, label: string, scope: string, layoutId: number | bigint): number | bigint => {
 	// Insert and return the id of the newly inserted row
 	const result = db.prepare('INSERT INTO controls (label, scope, layout_id) VALUES (?, ?, ?) RETURNING id').run(label, scope, layoutId);
 	return result.lastInsertRowid;
